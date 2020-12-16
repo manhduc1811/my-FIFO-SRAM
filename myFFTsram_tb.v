@@ -1,22 +1,30 @@
 /************************************************
-
 ************************************************/
 module myFFTsram_tb;
-    reg        clk,clrn;
+    reg        clk,rst_n;
     reg        read;
     reg        write;
     reg  [7:0] data_in;
     wire [7:0] data_out;
     wire       ready;
     wire       overflow;
-    myFFTsram UUT (clk,clrn,read,write,data_in,data_out,ready,overflow);
+    myFFTsram UUT (
+		.clk(clk),
+		.rst_n(rst_n),
+		.read(read),
+		.write(write),
+		.data_in(data_in),
+		.data_out(data_out),
+		.ready(ready),
+		.overflow(overflow)
+	);
     always #10 clk = !clk;
     initial begin
             clk     = 0;
-            clrn    = 0;
+            rst_n   = 0;
             read    = 0;
             write   = 0;
-        #20 clrn    = 1;
+        #20 rst_n   = 1;
             data_in = 8'he0;
             write   = 1;
         #20 data_in = 8'he1;

@@ -1,9 +1,8 @@
 /************************************************
-
 ************************************************/
 module myFFTsram (
     input        clk,                             // clock
-    input        clrn,                            // reset
+    input        rst_n,                            // reset
     input        read,                            // fifo read, active high
     input        write,                           // fifo write, active high
     input  [7:0] data_in,                         // fifo data input
@@ -16,27 +15,28 @@ module myFFTsram (
     reg    [2:0] write_pointer;                   // fifo write pointer
     reg    [2:0] read_pointer;                    // fifo read pointer
 // State register
-    always @ (posedge clk or negedge clrn) begin
-        if (!clrn) begin
-            write_pointer <= 0;                   // clear write pointer
-            read_pointer  <= 0;                   // clear read pointer
-            overflow      <= 0;                   // clear overflow flag
+    always @ (posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            write_pointer                       <= 0;                              // clear write pointer
+            read_pointer                        <= 0;                              // clear read pointer
+            overflow                            <= 0;                              // clear overflow flag
         end else begin
             if (write) begin
                 if ((write_pointer + 3'b1) != read_pointer) begin 
-                    fifo_buff[write_pointer] 	<= data_in;                                   // push data
-                    write_pointer               <= write_pointer + 3'd1;                      // pointer++
-                end else begin
-                    overflow                    <= 1;                                         // overflow
+                    fifo_buff[write_pointer] 	<= data_in;                        // push data
+                    write_pointer               <= write_pointer + 3'd1;           // pointer++
+                end 
+				else begin
+                    overflow                    <= 1;                              // overflow
                 end
             end
             if (read && ready) begin
-                read_pointer                    <= read_pointer + 3'd1;                       // pointer++, pop
-                overflow                        <= 0;                                         // clear overflow
+                read_pointer                    <= read_pointer + 3'd1;            // pointer++, pop
+                overflow                        <= 0;                              // clear overflow
             end 
         end
     end
 // Output logic
-    assign ready                                 = (write_pointer != read_pointer);          // has data
-    assign data_out                              = fifo_buff[read_pointer];                  // data output
+    assign ready                                = (write_pointer != read_pointer);// has data
+    assign data_out                             = fifo_buff[read_pointer];        // data output
 endmodule
