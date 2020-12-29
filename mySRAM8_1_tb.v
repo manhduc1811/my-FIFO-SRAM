@@ -2,7 +2,7 @@
 New tb
 ************************************************************************************************/
 module mySRAM_tb;
-    parameter       BITS = 12, word_depth = 8, addr_width = 3;
+    parameter       BITS = 12, WORD_DEPTH = 8, ADDR_WIDTH = 3;
     reg             clk,rst_n;
     reg             read;
     reg             write;
@@ -12,8 +12,8 @@ module mySRAM_tb;
     wire            overflow;
     mySRAM #(
 		.BITS(BITS),
-		.word_depth(word_depth),
-		.addr_width(addr_width)
+		.WORD_DEPTH(WORD_DEPTH),
+		.ADDR_WIDTH(ADDR_WIDTH)
 	) 
 	UUT (
 		.clk(clk),

@@ -1,8 +1,7 @@
 /************************************************************************************************
-New tb
 ************************************************************************************************/
 module mySRAM_tb;
-    parameter       BITS = 12, word_depth = 8, addr_width = 3;
+    parameter       BITS = 12, WORD_DEPTH = 8, ADDR_WIDTH = 3;
     reg             clk,rst_n;
     reg             read;
     reg             write;
@@ -12,8 +11,8 @@ module mySRAM_tb;
     wire            overflow;
     mySRAM #(
 		.BITS(BITS),
-		.word_depth(word_depth),
-		.addr_width(addr_width)
+		.WORD_DEPTH(WORD_DEPTH),
+		.ADDR_WIDTH(ADDR_WIDTH)
 	) 
 	UUT (
 		.clk(clk),
@@ -32,14 +31,14 @@ module mySRAM_tb;
             read    = 0;
             write   = 0;
         #20 rst_n   = 1;
-            data_in = 12'h0e0;  write   = 1;
+            data_in = 12'h0e0;
         #20 data_in = 12'h001; 
         #20 data_in = 12'h002; 
-        #20 data_in = 12'h003;	 
+        #20 data_in = 12'h003;	write   = 1; 
         #20 data_in = 12'h004;	 
         #20 data_in = 12'h005; 
         #20 data_in = 12'h006; 
-        #20 data_in = 12'h007; 	
+        #20 data_in = 12'h007; 	read = 1;
         #20 data_in = 12'h008; 
         #20 data_in = 12'h009; 
         #20 data_in = 12'h00a; 
@@ -47,13 +46,13 @@ module mySRAM_tb;
         #20 data_in = 12'h00c; 	
         #20 data_in = 12'h00d; 	
         #20 data_in = 12'h00e; 
-        #20 data_in = 12'h00f; 	
-        #20 data_in = 12'h010; 	read = 1;
+        #20 data_in = 12'h00f; 	read = 0;
+        #20 data_in = 12'h010; 	
         #20 data_in = 12'h011; 
         #20 data_in = 12'h012; 
         #20 data_in = 12'h013; 
         #20 data_in = 12'h014; 
-        #20 data_in = 12'h015; 	
+        #20 data_in = 12'h015; 	read = 1;
         #20 data_in = 12'h016; 
         #20 data_in = 12'h017; 
         #20 data_in = 12'h018;

@@ -4,8 +4,8 @@ New version, fixed error in __1Eb
 module mySRAM 
 #(
     parameter BITS       = 12, 
-	          word_depth = 8, 
-              addr_width = 3
+	          WORD_DEPTH = 8, 
+              ADDR_WIDTH = 3
 )
 (
     input        		    clk,                                     // clock
@@ -18,11 +18,11 @@ module mySRAM
     output reg   		    overflow                                 // fifo overflow flag
 );   // fifo
 // Internal signals
-    reg    [BITS-1:0] 		fifo_buff        [word_depth-1:0];       // fifo buffer of depth word_depth
-    reg    [addr_width-1:0] write_pointer;                   	     // fifo write pointer
-    reg    [addr_width-1:0] read_pointer;                    	     // fifo read pointer
-	reg    [addr_width-1:0] new_write_pointer;                       // fifo write pointer
-	//wire   [addr_width-1:0] new_write_pointer = write_pointer + 1;  // Second way
+    reg    [BITS-1:0] 		fifo_buff        [WORD_DEPTH-1:0];       // fifo buffer of depth WORD_DEPTH
+    reg    [ADDR_WIDTH-1:0] write_pointer;                   	     // fifo write pointer
+    reg    [ADDR_WIDTH-1:0] read_pointer;                    	     // fifo read pointer
+	reg    [ADDR_WIDTH-1:0] new_write_pointer;                       // fifo write pointer
+	//wire   [ADDR_WIDTH-1:0] new_write_pointer = write_pointer + 1;  // Second way
 // State register
     always @ (posedge clk or negedge rst_n) begin
         if (!rst_n) begin
